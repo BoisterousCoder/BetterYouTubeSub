@@ -1,9 +1,29 @@
 const API_KEY = 'AIzaSyCBs5okQYwYL8XghpWFaf3YYKrBJUjnJi0';
 const START_DATE = '2018-5-12'
 const END_DATE = '2018-6-12'
+const USER_NAME = 'shadowace112';
 const PAGE_SIZE = 5;
 let subs = [];
 
+function getChannelIDByUsername(username, callback){
+	$.ajax({
+		url:"https://www.googleapis.com/youtube/v3/channels",
+		dataType: 'jsonp',
+		crossDomain: true,
+		data:{
+			'forUsername': username,
+			'part': 'snippet',
+			'key': API_KEY
+		},
+		success: function(data){
+			if(data.items.length < 1) alert("invalid username");
+			else callback(data.items[0].id);
+		},
+		error:function(){
+			alert("Error");
+		}      
+	})
+}
 function getUploadsPlaylistID(channelId, callback){
 	$.ajax({
 		url:"https://www.googleapis.com/youtube/v3/channels",
@@ -159,8 +179,9 @@ function dateCompare(date, otherdate){
 }
 
 $(function(){
-	let myChannelId = "UCRWa5qX5vw23r_R2j1yixbA";
-	getAllVideosBetween(START_DATE, END_DATE, myChannelId, (video, channel) => {
-		$("body").append(video.publishedAt + ": " + channel.title + ": " + video.title + "<br/>");
+	getChannelIDByUsername(USER_NAME, (myChannelId) => {
+		getAllVideosBetween(START_DATE, END_DATE, myChannelId, (video, channel) => {
+			$("body").append(video.publishedAt + ": " + channel.title + ": " + video.title + "<br/>");
+		});
 	});
 })
