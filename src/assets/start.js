@@ -1,0 +1,166 @@
+const API_KEY = 'AIzaSyCBs5okQYwYL8XghpWFaf3YYKrBJUjnJi0';
+const START_DATE = '2018-5-12'
+const END_DATE = '2018-6-12'
+const PAGE_SIZE = 5;
+let subs = [];
+
+function getUploadsPlaylistID(channelId, callback){
+	$.ajax({
+		url:"https://www.googleapis.com/youtube/v3/channels",
+		dataType: 'jsonp',
+		crossDomain: true,
+		data:{
+			'id': channelId,
+			'part': 'snippet, contentDetails',
+			'key': API_KEY
+		},
+		success: function(data){
+			data.items.map((channelData, i) => {
+				if(i ==0){
+					subs.push(channelData.snippet);
+					callback(channelData.contentDetails.relatedPlaylists.uploads)
+				} else {
+					console.error("HOW IS THIS POSSIBLE?!?!");
+				}
+			});
+		},
+		error:function(){
+			alert("Error");
+		}      
+	})
+}
+function getSubs(channelId, callback, page){
+	dataToSend = {
+		'channelId': channelId,
+		'part': 'snippet',
+		'maxResults':PAGE_SIZE,
+		'key': API_KEY
+	}
+	if(page){
+		dataToSend['pageToken'] = page;
+	}
+	$.ajax({
+		 url:"https://www.googleapis.com/youtube/v3/subscriptions",
+		 dataType: 'jsonp',
+		 crossDomain: true,
+		 data: dataToSend,
+		 success:function(data){
+			data.items.map((subData, i) => {
+				callback(subData.snippet.resourceId, i)
+			});
+			if(data.nextPageToken){
+				getSubs(channelId, callback, data.nextPageToken);
+			}
+		 },
+		 error:function(){
+			 alert("Error");
+		 }      
+	})
+}
+function getVideosInPlaylist(playlistId, startDate, callback, page){
+	dataToSend = {
+		'playlistId': playlistId,
+		'part': 'snippet',
+		'maxResults':PAGE_SIZE,
+		'key': API_KEY
+	}
+	if(page){
+		dataToSend['pageToken'] = page;
+	}
+	$.ajax({
+		 url:"https://www.googleapis.com/youtube/v3/playlistItems",
+		 dataType: 'jsonp',
+		 crossDomain: true,
+		 data: dataToSend,
+		 success:function(data){
+			let oldestVideoInListDate;
+			data.items.map((videoData, i) => {
+				getVideo(videoData.snippet.resourceId.videoId, video => {
+					if(oldestVideoInListDate == undefined){
+						oldestVideoInListDate = video.publishedAt;
+					}else if(dateCompare(video.publishedAt, oldestVideoInListDate) < 0){
+						oldestVideoInListDate = video.publishedAt;
+					}
+					callback(video, i);
+					if(i == PAGE_SIZE - 1){
+						if(dateCompare(startDate, oldestVideoInListDate) < 0 && data.nextPageToken){
+							getVideosInPlaylist(playlistId, startDate, callback, data.nextPageToken)
+						}
+					}
+				});
+				
+					
+			});
+		 },
+		 error:function(){
+			 alert("Error");
+		 }      
+	})
+}
+function getVideo(videoId, callback){
+	$.ajax({
+		 url:"https://www.googleapis.com/youtube/v3/videos",
+		 dataType: 'jsonp',
+		 crossDomain: true,
+		 data:{
+			'id': videoId,
+			'part': 'snippet',
+			'key': API_KEY
+		 },
+		 success:function(data){
+			data.items.map((videoData, i) => {
+				if(i ==0){
+					callback(videoData.snippet);
+				}else{
+					console.error("HOW IS THIS POSSIBLE?!?!");
+				}
+			});
+		 },
+		 error:function(){
+			 alert("Error");
+		 }      
+	})
+}
+function getAllVideosBetween(startDate, endDate, channelId, callback){
+	getSubs(channelId, (sub, subNum) => {
+		getUploadsPlaylistID(sub.channelId, (uploadsId) => {
+			getVideosInPlaylist(uploadsId, startDate, (video, videoNum) =>{
+				let isAfterStartDate = dateCompare(video.publishedAt, startDate) > 0;
+				let isBeforeEndDate = dateCompare(video.publishedAt, endDate) <= 0
+				if(isAfterStartDate && isBeforeEndDate){
+					let channel;
+					for(let sub of subs){
+						if(sub.title == video.channelTitle){
+							channel = sub;
+							break;
+						}
+					}
+					callback(video, channel);
+				}
+			});
+		});
+	});
+}
+
+function dateCompare(date, otherdate){
+	date = date.split("T")[0].split("-");
+	otherdate = otherdate.split("T")[0].split("-");
+	function compareSection(i){
+		return Number(date[i]) - Number(otherdate[i]);
+	}
+	let result = compareSection(0);
+	if(result == 0){
+		result = compareSection(1);
+		if(result == 0){
+			result = compareSection(2);
+		}
+	}
+	return result;
+}
+
+$(function(){
+	let myChannelId = "UCRWa5qX5vw23r_R2j1yixbA";
+	getAllVideosBetween(START_DATE, END_DATE, myChannelId, (video, channel) => {
+		$("body").append(video.publishedAt + ": " + channel.title + ": " + video.title + "<br/>");
+	});
+})
