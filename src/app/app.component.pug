@@ -1,3 +1,13 @@
-app-top-bar(id="topBar" [today] = 'today' [startDate]='startDate' [channelId]='channelId')
-app-side-bar(id="sideBar" '[creators]'='creators')
-app-video-list(id="videoList" '[creators]'='creators' '[listings]'='listings')
+app-top-bar(
+    id="topBar" 
+    '[today]'='today' 
+    '[startDate]'='startDate' 
+    '[channelId]'='channelId'
+    '[buildListings]'='getBuildListingsFunc()')
+app-side-bar(
+    id="sideBar" 
+    '[creators]'='creators')
+app-video-list(
+    id="videoList" 
+    '[creators]'='creators'
+    '[listings]'='listings')

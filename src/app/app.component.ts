@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { buildDriverProvider } from 'protractor/built/driverProviders';
 declare var getAllVideosBetween: any;
 declare var Date: any;
 
@@ -12,21 +11,20 @@ export class AppComponent {
   title = 'app';
   listings = [];
   creators = [];
-  today:string;
-  startDate:string;
-  channelId:string;
+  today;
+  startDate;
+  channelId = 'UCRWa5qX5vw23r_R2j1yixbA';
   constructor(){
     let now = new Date();
     this.today = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate()
     this.startDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate()-3)
-    this.channelId = 'UCRWa5qX5vw23r_R2j1yixbA';
-    this.buildListings();
+    this.buildListings(this.startDate, this.today, this.channelId);
   }
-  buildListings(){
+  buildListings(startDate, endDate, channelId){
     this.listings = [];
     this.creators = [];
     let self = this;
-    getAllVideosBetween(this.startDate, this.today, this.channelId, (video, creator) => {
+    getAllVideosBetween(startDate, endDate, channelId, (video, creator) => {
       creator.isActive = true;
       self.listings.push({video, creator})
       this.listings.sort((a, b) => {
@@ -40,6 +38,12 @@ export class AppComponent {
       if(!isDuplicateCreator) self.creators.push(creator);
       self.sortCreators();
     });
+  }
+  getBuildListingsFunc(){
+    let self = this;
+    return function(startDate, endDate, channelId){
+      return self.buildListings(startDate, endDate, channelId);
+    }
   }
   sortCreators(){
     this.creators.sort((a, b) => {

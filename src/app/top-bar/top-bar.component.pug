@@ -1,1 +1,17 @@
 h1 Better YouTube Subscription feed
+form('(submit)'="onSubmit($event)")
+    span
+        label Start:
+        input(name="startDate" '[value]'="startDate")
+    br
+    span
+        label End:
+        input(name="today" '[value]'="today")
+    br
+    span
+        label Channel Id:
+        input(name="channelId" '[value]'="channelId")
+    br
+    input(type="submit")
+    br
+    br
