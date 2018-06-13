@@ -1,0 +1,5 @@
+button('(click)'='allOn()') All On
+button('(click)'='allOff()') All Off
+ol
+    li('*ngFor'='let creator of creators; let i = index')
+        span('[class]'='creator.isActive?"active":"inactive"' '(click)' = 'toggleActive(i)') {{creator.title}}

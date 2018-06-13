@@ -2,10 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
+import { VideoListComponent } from './video-list/video-list.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SideBarComponent,
+    VideoListComponent,
+    TopBarComponent
   ],
   imports: [
     BrowserModule

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-declare var gapi: any;
+import { buildDriverProvider } from 'protractor/built/driverProviders';
+declare var getAllVideosBetween: any;
+declare var Date: any;
 
 @Component({
   selector: 'app-root',
@@ -8,26 +10,67 @@ declare var gapi: any;
 })
 export class AppComponent {
   title = 'app';
-  apiKey:string = "AIzaSyCBs5okQYwYL8XghpWFaf3YYKrBJUjnJi0";
+  listings = [];
+  creators = [];
+  today:string;
+  startDate:string;
+  channelId:string;
   constructor(){
-    gapi.load('client', this.onAPILoad);
+    let now = new Date();
+    this.today = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate()
+    this.startDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate()-3)
+    this.channelId = 'UCRWa5qX5vw23r_R2j1yixbA';
+    this.buildListings();
   }
-  onAPILoad(){
-    gapi.client.init({
-      'apiKey': 'YOUR_API_KEY',
-      // Your API key will be automatically added to the Discovery Document URLs.
-      'discoveryDocs': ['https://people.googleapis.com/$discovery/rest'],
-      'scope': 'youtube.readonly',
-    }).then(function() {
-      // 3. Initialize and make the API request.
-      return gapi.client.people.people.get({
-        'resourceName': 'people/me',
-        'requestMask.includeField': 'person.names'
-      });
-    }).then(function(response) {
-      console.log(response.result);
-    }, function(reason) {
-      console.log('Error: ' + reason.result.error.message);
+  buildListings(){
+    this.listings = [];
+    this.creators = [];
+    let self = this;
+    getAllVideosBetween(this.startDate, this.today, this.channelId, (video, creator) => {
+      creator.isActive = true;
+      self.listings.push({video, creator})
+      this.listings.sort((a, b) => {
+        return -1 * this.dateCompare(a.video.publishedAt, b.video.publishedAt);
+      })
+
+      let isDuplicateCreator = false;
+      for(let possibleDuplicate of self.creators){
+        if(possibleDuplicate.title == creator.title) isDuplicateCreator = true
+      }
+      if(!isDuplicateCreator) self.creators.push(creator);
+      self.sortCreators();
     });
+  }
+  sortCreators(){
+    this.creators.sort((a, b) => {
+      var x = a.title.toLowerCase();
+      var y = b.title.toLowerCase();
+      if (x < y) {return -1;}
+      if (x > y) {return 1;}
+      return 0;
+    })
+  }
+  setListings(listings){
+    for (const date in listings) {
+      this.listings.push({
+        date, "listings":listings[date]
+      })
+    }
+    
+  }
+  dateCompare(date, otherdate){
+    date = date.split("T")[0].split("-");
+    otherdate = otherdate.split("T")[0].split("-");
+    function compareSection(i){
+      return Number(date[i]) - Number(otherdate[i]);
+    }
+    let result = compareSection(0);
+    if(result == 0){
+      result = compareSection(1);
+      if(result == 0){
+        result = compareSection(2);
+      }
+    }
+    return result;
   }
 }

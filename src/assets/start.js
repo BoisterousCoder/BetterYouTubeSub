@@ -1,7 +1,4 @@
 const API_KEY = 'AIzaSyCBs5okQYwYL8XghpWFaf3YYKrBJUjnJi0';
-const START_DATE = '2018-5-12'
-const END_DATE = '2018-6-12'
-const USER_NAME = 'shadowace112';
 const PAGE_SIZE = 5;
 let subs = [];
 
@@ -101,6 +98,7 @@ function getVideosInPlaylist(playlistId, startDate, callback, page){
 					}else if(dateCompare(video.publishedAt, oldestVideoInListDate) < 0){
 						oldestVideoInListDate = video.publishedAt;
 					}
+					video.id = videoData.snippet.resourceId.videoId
 					callback(video, i);
 					if(i == PAGE_SIZE - 1){
 						if(dateCompare(startDate, oldestVideoInListDate) < 0 && data.nextPageToken){
@@ -177,11 +175,3 @@ function dateCompare(date, otherdate){
 	}
 	return result;
 }
-
-$(function(){
-	getChannelIDByUsername(USER_NAME, (myChannelId) => {
-		getAllVideosBetween(START_DATE, END_DATE, myChannelId, (video, channel) => {
-			$("body").append(video.publishedAt + ": " + channel.title + ": " + video.title + "<br/>");
-		});
-	});
-})
