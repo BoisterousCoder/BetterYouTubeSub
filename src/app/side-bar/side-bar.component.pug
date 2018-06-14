@@ -1,5 +1,5 @@
 button('(click)'='allOn()') All On
 button('(click)'='allOff()') All Off
 ol
-    li('*ngFor'='let creator of creators; let i = index')
+    li('*ngFor'='let creator of dataService.creators; let i = index')
         span('[class]'='getBackgroundColor(creator)' '(click)' = 'toggleActive(i)') {{creator.title}}

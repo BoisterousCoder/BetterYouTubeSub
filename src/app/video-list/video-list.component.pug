@@ -1,9 +1,9 @@
-table('*ngIf'='!isInAddMode')
+table('*ngIf'='!dataService.isInAddMode')
     tr
         th day
         th title
         th creator
-    tr('*ngFor'='let listing of listings' '[class]'='isListingActive(listing)?"active":"inactive"') 
+    tr('*ngFor'='let listing of dataService.listings' '[class]'='isListingActive(listing)?"active":"inactive"') 
         td {{listing.video.publishedAt.split("T")[0]}}
         td 
             a('[href]'='"https://www.youtube.com/watch?v="+listing.video.id' target="_blank") {{listing.video.title}}

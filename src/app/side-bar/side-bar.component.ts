@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -6,52 +7,48 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./side-bar.component.css']
 })
 export class SideBarComponent implements OnInit {
-  @Input() creators;
-  @Input() groups;
-  @Input() isInAddMode;
-  @Input() groupToAddTo;
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
   }
   toggleActive(i){
-    if(!this.isInAddMode){
-      this.creators[i].isActive = !this.creators[i].isActive;
+    if(!this.dataService.isInAddMode){
+      this.dataService.creators[i].isActive = !this.dataService.creators[i].isActive;
     }else{
       let groupI = 0;
-      for(let creatorTitle of this.groups[this.groupToAddTo]){
-        if(creatorTitle == this.creators[i].title){
-          this.groups[this.groupToAddTo].splice(groupI, 1);
+      for(let creatorTitle of this.dataService.groups[this.dataService.groupToAddTo]){
+        if(creatorTitle == this.dataService.creators[i].title){
+          this.dataService.groups[this.dataService.groupToAddTo].splice(groupI, 1);
           return;
         }
         groupI++;
       }
-      this.groups[this.groupToAddTo].push(this.creators[i].title);
+      this.dataService.groups[this.dataService.groupToAddTo].push(this.dataService.creators[i].title);
     }
   }
   getBackgroundColor(creator){
-    if(this.isInAddMode && this.getIsInGroup(creator, this.groupToAddTo)){
+    if(this.dataService.isInAddMode && this.getIsInGroup(creator, this.dataService.groupToAddTo)){
       return "red"
-    }else if(!this.isInAddMode && creator.isActive){
+    }else if(!this.dataService.isInAddMode && creator.isActive){
       return "yellow"
     }else{
       return "";
     }
   }
   getIsInGroup(creator, group){
-    for(let creatorTitle of this.groups[group]){
+    for(let creatorTitle of this.dataService.groups[group]){
       if(creatorTitle == creator.title) return true;
     }
     return false;
   }
   allOn(){
-    for(let i in this.creators){
-      this.creators[i].isActive = true;
+    for(let i in this.dataService.creators){
+      this.dataService.creators[i].isActive = true;
     }
   }
   allOff(){
-    for(let i in this.creators){
-      this.creators[i].isActive = false;
+    for(let i in this.dataService.creators){
+      this.dataService.creators[i].isActive = false;
     }
   }
 }

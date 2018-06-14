@@ -8,10 +8,10 @@ form('(submit)'="onSubmit($event)")
         label Channel Id:
         br
     #inputs
-        input(name="startDate" '[value]'="startDate")
+        input(name="startDate" '[value]'="dataService.startDate")
         br
-        input(name="today" '[value]'="today")
+        input(name="today" '[value]'="dataService.today")
         br
-        input(name="channelId" '[value]'="channelId")
+        input(name="channelId" '[value]'="dataService.channelId")
         br
     input(type="submit")

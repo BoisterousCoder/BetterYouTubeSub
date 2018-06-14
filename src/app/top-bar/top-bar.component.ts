@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -6,20 +7,16 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./top-bar.component.css']
 })
 export class TopBarComponent implements OnInit {
-  @Input() startDate;
-  @Input() today;
-  @Input() channelId;
-  @Input() buildListings;
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
   }
 
   onSubmit(event){
-    let startDate = event.target.elements.startDate.value;
-    let today = event.target.elements.today.value;
-    let channelId = event.target.elements.channelId.value;
-    this.buildListings(startDate, today, channelId);
+    this.dataService.startDate = event.target.elements.startDate.value;
+    this.dataService.today = event.target.elements.today.value;
+    this.dataService.channelId = event.target.elements.channelId.value;
+    this.dataService.buildListings();
     return false;
   }
 
