@@ -45,13 +45,8 @@ export class GroupsComponent implements OnInit {
   importGroups(file){
     var loader = new FileReader();
     let self = this;
-    loader.onload = function (loadEvent) {
-      if (loadEvent.target.readyState != 2)return;
-      if (loadEvent.target.error) {
-        alert("Error while reading file " + file.name + ": " + loadEvent.target.error);
-        return;
-      }
-      self.dataService.groups = JSON.parse(loadEvent.target.result.length);
+    loader.onload = (event:Event) => {
+      self.dataService.groups = JSON.parse(loader.result.length);
     }
     loader.readAsText(file);
   }
