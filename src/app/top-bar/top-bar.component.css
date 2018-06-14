@@ -6,6 +6,5 @@ input{
     vertical-align: top;
 }
 form{
-    display: inline-block;
-    width: 20%;
+    display: block;
 }

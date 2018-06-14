@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 0.45cm;
+}
+app-top-bar{
+  background-color: red;
+  color: white;
+  border: red solid thick;
+  margin: 0;
+  width: 100%;
+  padding-left: 0.5cm;
+}
+h1{
+  padding: 0;
+  margin: 0;
+}
+input{
+  border: none;
+  background-color: pink;
+}
+input[type=submit]{
+  border:  thin solid black;
+}
+input[type=submit]:hover, button:hover{
+  border:  medium solid pink;
+}
+app-side-bar span
+{
+  padding-left: 0.5cm;
+}
+table{
+  margin: 0.5cm
+}
+button, input[type=submit]{
+  border: none;
+  margin: 0 0.05cm;
+  padding: 0.1cm;
+}
+button{
+  background-color: red;
+  color: white;
+}
+button:active{
+  background-color: darkred;
+}
+a{
+  color: red;
+}
+a:visited{
+  color: darkred;
+}
+body{
+  background-color: white;
+  display: block;
+}

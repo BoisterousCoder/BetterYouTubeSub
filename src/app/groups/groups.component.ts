@@ -28,6 +28,33 @@ export class GroupsComponent implements OnInit {
   loadGroups(){
     this.dataService.groups = JSON.parse(this.persistenceService.get('groups', StorageType.LOCAL));
   }
+  
+  exportGroups(){
+    var downloadLink = document.createElement('a');
+    downloadLink.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.dataService.groups)));
+    downloadLink.setAttribute('download', "exportedGroups.txt");
+
+    downloadLink.style.display = 'none';
+    document.body.appendChild(downloadLink);
+
+    downloadLink.click();
+
+    document.body.removeChild(downloadLink);
+  }
+
+  importGroups(file){
+    var loader = new FileReader();
+    let self = this;
+    loader.onload = function (loadEvent) {
+      if (loadEvent.target.readyState != 2)return;
+      if (loadEvent.target.error) {
+        alert("Error while reading file " + file.name + ": " + loadEvent.target.error);
+        return;
+      }
+      self.dataService.groups = JSON.parse(loadEvent.target.result.length);
+    }
+    loader.readAsText(file);
+  }
 
   removeGroup(groupName){
     delete this.dataService.groups[groupName]

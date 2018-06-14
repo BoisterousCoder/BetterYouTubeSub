@@ -10,10 +10,12 @@ li span{
     display: block;
 }
 .yellow{
-    background: yellow;
+    background: red;
+    color: white;
 }
 .red{
     background: red;
+    color: white;
 }
 span{
     width: 100%;

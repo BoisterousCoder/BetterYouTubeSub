@@ -1,7 +1,10 @@
 div
-	button('(click)'= 'isManageMode = !isManageMode; dataService.isInAddMode = false') Manage Groups
+	button('(click)'= 'isManageMode = !isManageMode; dataService.isInAddMode = false') {{isManageMode?"Leave Manage Groups Mode":"Enter Manage Groups Mode"}}
 	button('(click)'= 'loadGroups()') Load Groups
 	button('*ngIf'="isManageMode", '(click)'= 'saveGroups()') Save Groups
+	button('*ngIf'="isManageMode", '(click)'= 'exportGroups()') Export Groups
+	label('*ngIf'="isManageMode") Import Groups:
+	input(type="file", '*ngIf'="isManageMode", '(change)'= 'importGroups($event.target.files[0])')
 form('*ngIf'="isManageMode" '(submit)'= 'createGroup($event)') Create Group:
 	input(name='groupName')
 	input(type='submit')

@@ -1,8 +1,8 @@
 table('*ngIf'='!dataService.isInAddMode')
     tr
-        th day
-        th title
-        th creator
+        th Day
+        th Title
+        th Creator
     tr('*ngFor'='let listing of dataService.listings' '[class]'='isListingActive(listing)?"active":"inactive"') 
         td {{listing.video.publishedAt.split("T")[0]}}
         td 
