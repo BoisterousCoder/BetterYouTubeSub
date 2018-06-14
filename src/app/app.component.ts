@@ -11,11 +11,15 @@ export class AppComponent {
   title = 'app';
   listings = [];
   creators = [];
+  groups;
+  isInAddMode;
   today;
+  groupToAddTo;
   startDate;
   channelId = 'UCRWa5qX5vw23r_R2j1yixbA';
   constructor(){
     let now = new Date();
+    this.isInAddMode = false;
     this.today = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate()
     this.startDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate()-3)
     this.buildListings(this.startDate, this.today, this.channelId);

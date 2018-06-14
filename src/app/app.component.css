@@ -5,11 +5,11 @@
 }
 #sideBar{
     display: inline-block;
-    width: 15%;
+    width: 3in;
 }
 #videoList{
     display: inline-block;
-    width: 60%;
+    width: 70%;
 }
 #topBar{
     display: block;

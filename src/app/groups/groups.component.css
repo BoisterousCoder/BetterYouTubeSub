@@ -1,0 +1,16 @@
+.b1{
+    margin-left: 0.1cm;
+}
+span{
+    padding: 0.1cm;
+    margin-right: 0.3cm;
+    border: solid black thin;
+}
+#Manage{
+    margin: 0.1cm;
+    display: block;
+}
+form{
+    margin: 0.1cm;
+    display: block;
+}

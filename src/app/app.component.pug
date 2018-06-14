@@ -4,10 +4,19 @@ app-top-bar(
     '[startDate]'='startDate' 
     '[channelId]'='channelId'
     '[buildListings]'='getBuildListingsFunc()')
+app-groups(
+    '[creators]'='creators'
+    '[groups]'='groups'
+    '[isInAddMode]'='isInAddMode'
+    '[groupToAddTo]'='groupToAddTo')
 app-side-bar(
     id="sideBar" 
-    '[creators]'='creators')
+    '[groups]'='groups'
+    '[isInAddMode]'='isInAddMode'
+    '[creators]'='creators'
+    '[groupToAddTo]'='groupToAddTo')
 app-video-list(
     id="videoList" 
+    '[isInAddMode]'='isInAddMode'
     '[creators]'='creators'
     '[listings]'='listings')

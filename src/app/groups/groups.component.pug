@@ -1,0 +1,9 @@
+button#Manage('(click)'= 'isManageMode = !isManageMode; isInAddMode = false') Manage Groups
+form('*ngIf'="isManageMode" '(submit)'= 'createGroup($event)') Create Group:
+	input(name='groupName')
+	input(type='submit')
+span('*ngFor'='let groupName of groupNames') {{groupName}}
+	button.b1('(click)'='b1Click(groupName)') {{isManageMode?"manage":"on"}}
+	button.b2('(click)'='b2Click(groupName)') {{isManageMode?"remove":"off"}}
+br
+br

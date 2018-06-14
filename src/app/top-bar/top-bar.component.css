@@ -1,0 +1,11 @@
+div{
+    display: inline-block;
+    padding-right: 0.5cm;
+}
+input{
+    vertical-align: top;
+}
+form{
+    display: inline-block;
+    width: 20%;
+}

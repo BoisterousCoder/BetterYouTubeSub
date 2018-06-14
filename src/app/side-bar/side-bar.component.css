@@ -9,8 +9,11 @@ li span{
     text-align: left;
     display: block;
 }
-.active{
+.yellow{
     background: yellow;
+}
+.red{
+    background: red;
 }
 span{
     width: 100%;

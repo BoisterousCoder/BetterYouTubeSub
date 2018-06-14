@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class VideoListComponent implements OnInit {
   @Input() listings;
   @Input() creators;
+  @Input() isInAddMode;
   constructor() { }
 
   ngOnInit() {
