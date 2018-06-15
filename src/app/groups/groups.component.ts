@@ -49,7 +49,7 @@ export class GroupsComponent implements OnInit {
     var loader = new FileReader();
     let self = this;
     loader.onload = (event:Event) => {
-      self.dataService.groups = JSON.parse(loader.result.length);
+      self.dataService.groups = JSON.parse(loader.result);
     }
     loader.readAsText(file);
   }
