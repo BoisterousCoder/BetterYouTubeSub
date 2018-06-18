@@ -108,9 +108,7 @@ function getVideosInPlaylist(playlistId, startDate, callback, page){
 							getVideosInPlaylist(playlistId, startDate, callback, data.nextPageToken)
 						}
 					}
-				});
-				
-					
+				});	
 			});
 		 },
 		 error:function(){

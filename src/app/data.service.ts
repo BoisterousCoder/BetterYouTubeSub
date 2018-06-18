@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 import { Injectable } from '@angular/core';
+import { DataFetcherService } from "./data-fetcher.service"
+import 'rxjs/Rx';
 declare var getAllVideosBetween: any;
 
 @Injectable({
@@ -12,22 +14,39 @@ export class DataService {
   creators = [];
   groups = {};
   isInAddMode;
-  today;
+  get endDate():string{
+    return this.dateToString(this.fetcher.startDate)
+  }
+  set endDate(value){
+    this.fetcher.startDate = new Date(value);
+  }
   groupToAddTo;
-  startDate;
+  subs;
+  get startDate():string{
+    return this.dateToString(this.fetcher.startDate)
+  }
+  set startDate(value){
+    this.fetcher.startDate = new Date(value);
+  }
   channelId = 'UCRWa5qX5vw23r_R2j1yixbA';
-  constructor() {
+  constructor(private fetcher: DataFetcherService) {
     let now = new Date();
     this.isInAddMode = false;
-    this.today = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate()
+    this.endDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate()
     this.startDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate()-3)
     this.buildListings();
+
+    this.fetcher.channelId = this.channelId;
+    this.subs = this.fetcher.getSubs();
+    this.subs.subscribe(sub => {
+      console.log(sub);
+    });
   }
   buildListings(){
     this.listings = [];
     this.creators = [];
     let self = this;
-    getAllVideosBetween(this.startDate, this.today, this.channelId, (video, creator) => {
+    getAllVideosBetween(this.startDate, this.endDate, this.channelId, (video, creator) => {
       creator.isActive = true;
       self.listings.push({video, creator})
       this.listings.sort((a, b) => {
@@ -73,5 +92,8 @@ export class DataService {
       }
     }
     return result;
+  }
+  dateToString(date:Date):string{
+    return date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
   }
 }
