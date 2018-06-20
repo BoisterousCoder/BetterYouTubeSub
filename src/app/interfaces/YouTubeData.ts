@@ -1,3 +1,12 @@
+export class Video{
+    publishedAt:Date;
+    creator:YouTubeSnippet;
+    channelTitle:string;
+    constructor(public id:string, data:YouTubeSnippet){
+        this.publishedAt = new Date(data.publishedAt);
+        this.channelTitle = data.channelTitle;
+    }
+}
 export interface SendData{
     id?:string;
     playlistId?:string;
@@ -56,7 +65,8 @@ export interface YouTubeSnippet{
 }
 export interface YouTubeResource{
     kind: string;
-    channelId: string;
+    channelId?: string;
+    videoId?:string;
 }
 export interface Thumbnails{
     default?: Thumbnail,
