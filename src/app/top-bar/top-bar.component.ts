@@ -17,7 +17,7 @@ export class TopBarComponent implements OnInit {
 
   onSubmit(event){
     this.dataService.startDate = event.target.elements.startDate.value;
-    this.dataService.endDate = event.target.elements.endDate.value;
+    this.dataService.today = event.target.elements.today.value;
     this.dataService.channelId = event.target.elements.channelId.value;
     this.dataService.buildListings();
     return false;
