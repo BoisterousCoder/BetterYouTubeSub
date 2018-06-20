@@ -6,14 +6,19 @@ body{
 app-top-bar{
   background-color: red;
   color: white;
-  border: red solid thick;
+  padding: 0.5cm;
+  padding-left: 0;
+  padding-right: 0;
   margin: 0;
   width: 100%;
-  padding-left: 0.5cm;
+}
+form{
+    margin-left: 1cm;
 }
 h1{
   padding: 0;
   margin: 0;
+  margin-left: 1cm;
 }
 input{
   border: none;
