@@ -18,4 +18,12 @@ mat-sidenav-container.sidenav-container
         mat-icon(aria-label="Side nav toggle icon") menu
       span Better YouTube Subscription Feed
     app-groups
-    ng-content('*ngIf'='!dataService.isInAddMode')
+      app-top-bar
+    mat-nav-list('*ngIf'='!dataService.isInAddMode')
+      div('*ngFor'='let listing of dataService.listings')
+          a(
+            '*ngIf'='isListingActive(listing)'
+            'mat-list-item'
+            '[href]'='"https://www.youtube.com/watch?v="+listing.video.id' 
+            target="_blank") 
+            | {{listing.video.publishedAt.split("T")[0]}} --- {{listing.video.title}} --- {{listing.creator.title}}

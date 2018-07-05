@@ -17,4 +17,12 @@ export class MainNavComponent {
     );
     
   constructor(private breakpointObserver: BreakpointObserver, private dataService: DataService) {}
+
+  isListingActive(listing){
+    let creator;
+    for(creator of this.dataService.creators){
+      if(listing.creator.title == creator.title) break;
+    }
+    return creator.isActive;
+  }
 }

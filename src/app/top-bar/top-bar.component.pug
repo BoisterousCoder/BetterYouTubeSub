@@ -4,22 +4,29 @@
 mat-expansion-panel
     mat-expansion-panel-header Change Search Config
     form('(submit)'="onSubmit($event)")
-        #labels
-            label Start:
-            br
-            label End:
-            br
-            label Channel ID:
-            br
-        #inputs
-            input(name="startDate" '[value]'="dataService.startDate")
-            br
-            input(name="today" '[value]'="dataService.today")
-            br
-            input(name="channelId" '[value]'="dataService.channelId")
-            br
-        #other
-            input(type="submit")
-            br
-            br
-            a#howToLink(href="https://support.google.com/youtube/answer/3250431?hl=en") How to get your channel ID
+        mat-form-field(appearance="fill" formControlName="startDate" color="accent")
+            mat-label Start Date
+            input('matInput' 
+                '[matDatepicker]'="startDate" 
+                placeholder="Start Date" 
+                name="startDate")
+            mat-datepicker-toggle(matSuffix [for]="startDate")
+            mat-datepicker(#startDate)
+        br
+        mat-form-field(appearance="fill" formControlName="today" color="accent")
+            mat-label End Date
+            input('matInput' 
+                '[matDatepicker]'="endDate" 
+                placeholder="End Date" 
+                name="today")
+            mat-datepicker-toggle(matSuffix [for]="endDate")
+            mat-datepicker(#endDate)
+        br
+        mat-form-field(appearance="fill" formControlName="channelId" color="accent")
+            mat-label Channel ID
+            input('matInput' placeholder="Channel ID" name="channelId" '[value]'="dataService.channelId")
+            span('matSuffix')
+                a('mat-icon-button' href="https://support.google.com/youtube/answer/3250431?hl=en" target="_blank")
+                    mat-icon(aria-label="How to get your channel ID") help
+        br
+        button('mat-raised-button' color="accent" type="submit") Go

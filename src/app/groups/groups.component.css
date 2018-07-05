@@ -7,3 +7,11 @@ mat-card{
 span{
     padding: 5px;
 }
+.manageGroupSection{
+    display: inline-block;
+    width: auto;
+    height: auto;
+}
+.block{
+    display: block;
+}

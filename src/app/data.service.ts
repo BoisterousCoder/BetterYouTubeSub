@@ -8,7 +8,7 @@ declare var subs: any;
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class DataService{
   listings = [];
   creators = [];
   get allCreators(){
@@ -24,7 +24,8 @@ export class DataService {
     let now = new Date();
     this.isInAddMode = false;
     this.today = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate()
-    this.startDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate()-3)
+    now.setDate(now.getDate()-3);
+    this.startDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate()
     this.buildListings();
   }
   buildListings(){
