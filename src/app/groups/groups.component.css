@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 mat-card{
     padding: 5px;
+    margin-right: 5px;
 }
 span{
     padding: 5px;

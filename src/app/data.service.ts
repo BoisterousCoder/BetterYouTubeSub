@@ -26,7 +26,6 @@ export class DataService{
     this.today = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate()
     now.setDate(now.getDate()-3);
     this.startDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate()
-    this.buildListings();
   }
   buildListings(){
     this.listings = [];
