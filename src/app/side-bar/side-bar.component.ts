@@ -9,33 +9,34 @@ import { DataService } from '../data.service';
   templateUrl: './side-bar.component.pug',
   styleUrls: ['./side-bar.component.css']
 })
-export class SideBarComponent implements OnInit {
-  constructor(private dataService: DataService) { }
+export class SideBarComponent {
+  constructor(private dataService: DataService) {
+  }
 
-  ngOnInit() {
-  }
-  toggleActive(i){
-    if(!this.dataService.isInAddMode){
-      this.dataService.creators[i].isActive = !this.dataService.creators[i].isActive;
-    }else{
-      let groupI = 0;
-      for(let creatorTitle of this.dataService.groups[this.dataService.groupToAddTo]){
-        if(creatorTitle == this.dataService.creators[i].title){
-          this.dataService.groups[this.dataService.groupToAddTo].splice(groupI, 1);
-          return;
-        }
-        groupI++;
-      }
-      this.dataService.groups[this.dataService.groupToAddTo].push(this.dataService.creators[i].title);
-    }
-  }
-  getBackgroundColor(creator){
+  // setActive(i, isActive){
+  //   if(!this.dataService.isInAddMode){
+      
+  //   }else{
+  //     if(!isActive){
+  //       let groupI = 0;
+  //       for(let creatorTitle of this.dataService.groups[this.dataService.groupToAddTo]){
+  //         if(creatorTitle == this.dataService.creators[i].title){
+  //           this.dataService.groups[this.dataService.groupToAddTo].splice(groupI, 1);
+  //           return;
+  //         }
+  //         groupI++;
+  //       }
+  //       throw("something didn't work right");
+  //     }else this.dataService.groups[this.dataService.groupToAddTo].push(this.dataService.creators[i].title);
+  //   }
+  // }
+  getIsActive(creator){
     if(this.dataService.isInAddMode && this.getIsInGroup(creator, this.dataService.groupToAddTo)){
-      return "red"
+      return true
     }else if(!this.dataService.isInAddMode && creator.isActive){
-      return "yellow"
+      return true
     }else{
-      return "";
+      return false;
     }
   }
   getIsInGroup(creator, group){
@@ -53,5 +54,15 @@ export class SideBarComponent implements OnInit {
     for(let i in this.dataService.creators){
       this.dataService.creators[i].isActive = false;
     }
+  }
+  setActive(e){
+    let optionToChange:string = e.option.getLabel();
+    let isSetTo:boolean = e.option.selected;
+    let i = 0;
+    for(let creator of this.dataService.creators){
+      if(creator.title == optionToChange) break;
+      else i++;
+    }
+    this.dataService.creators[i].isActive = isSetTo;
   }
 }

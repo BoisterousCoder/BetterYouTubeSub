@@ -1,4 +1,10 @@
-app-top-bar#topBar
-app-groups#groups
-app-side-bar#sideBar
-app-video-list#videoList
+main-nav
+    div
+        mat-nav-list
+            div('*ngFor'='let listing of dataService.listings')
+                a(
+                    '*ngIf'='isListingActive(listing)'
+                    'mat-list-item'
+                    '[href]'='"https://www.youtube.com/watch?v="+listing.video.id' 
+                    target="_blank") 
+                    | {{listing.video.publishedAt.split("T")[0]}} --- {{listing.video.title}} --- {{listing.creator.title}}

@@ -1,24 +1,25 @@
 //- This Source Code Form is subject to the terms of the Mozilla Public
 //- License, v. 2.0. If a copy of the MPL was not distributed with this
 //- file, You can obtain one at http://mozilla.org/MPL/2.0/.
-h1 Better YouTube Subscription Feed
-form('(submit)'="onSubmit($event)")
-    #labels
-        label Start:
-        br
-        label End:
-        br
-        label Channel ID:
-        br
-    #inputs
-        input(name="startDate" '[value]'="dataService.startDate")
-        br
-        input(name="today" '[value]'="dataService.today")
-        br
-        input(name="channelId" '[value]'="dataService.channelId")
-        br
-    #other
-        input(type="submit")
-        br
-        br
-        a#howToLink(href="https://support.google.com/youtube/answer/3250431?hl=en") How to get your channel ID
+mat-expansion-panel
+    mat-expansion-panel-header Change Search Config
+    form('(submit)'="onSubmit($event)")
+        #labels
+            label Start:
+            br
+            label End:
+            br
+            label Channel ID:
+            br
+        #inputs
+            input(name="startDate" '[value]'="dataService.startDate")
+            br
+            input(name="today" '[value]'="dataService.today")
+            br
+            input(name="channelId" '[value]'="dataService.channelId")
+            br
+        #other
+            input(type="submit")
+            br
+            br
+            a#howToLink(href="https://support.google.com/youtube/answer/3250431?hl=en") How to get your channel ID

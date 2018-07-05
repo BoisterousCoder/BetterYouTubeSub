@@ -1,0 +1,21 @@
+mat-sidenav-container.sidenav-container
+  mat-sidenav.sidenav(
+    "#drawer"
+    '*ngIf'='!dataService.isInAddMode'
+    "fixedInViewport"="true"
+    "[attr.role]"="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    "[mode]"="(isHandset$ | async) ? 'over' : 'side'"
+    "[opened]"="!(isHandset$ | async)")
+    app-side-bar
+  mat-sidenav-content
+    mat-toolbar(color="primary")
+      button(
+        "type"="button"
+        "aria-label"="Toggle sidenav"
+        "mat-icon-button"
+        "(click)"="drawer.toggle()"
+        "*ngIf"="isHandset$ | async")
+        mat-icon(aria-label="Side nav toggle icon") menu
+      span Better YouTube Subscription Feed
+    app-groups
+    ng-content('*ngIf'='!dataService.isInAddMode')

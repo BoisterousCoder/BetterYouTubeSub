@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(){}
+  constructor(private dataService: DataService){}
+
+  isListingActive(listing){
+    let creator;
+    for(creator of this.dataService.creators){
+      if(listing.creator.title == creator.title) break;
+    }
+    return creator.isActive;
+  }
 }

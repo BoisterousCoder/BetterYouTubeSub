@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 import { Injectable } from '@angular/core';
 declare var getAllVideosBetween: any;
+declare var subs: any;
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,9 @@ declare var getAllVideosBetween: any;
 export class DataService {
   listings = [];
   creators = [];
+  get allCreators(){
+    return subs;
+  }
   groups = {};
   isInAddMode;
   today;

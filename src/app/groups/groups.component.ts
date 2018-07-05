@@ -1,7 +1,7 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { PersistenceService , StorageType} from 'angular-persistence';
 import { DataService } from '../data.service';
 
@@ -10,26 +10,34 @@ import { DataService } from '../data.service';
   templateUrl: './groups.component.pug',
   styleUrls: ['./groups.component.css']
 })
-export class GroupsComponent implements OnInit {
+export class GroupsComponent {
   isManageMode = false;
   constructor(private dataService: DataService, private persistenceService: PersistenceService) { }
-
-  ngOnInit() {
-  }
 
   createGroup(event){
     let groupName = event.target.elements.groupName.value;
     this.dataService.groups[groupName] = []
-    
+
     return false;
   }
 
+  sortByTitle(array){
+    return array.sort((a, b) => {
+      var x = a.title.toLowerCase();
+      var y = b.title.toLowerCase();
+      if (x < y) {return -1;}
+      if (x > y) {return 1;}
+      return 0;
+    })
+  }
+
   saveGroups(){
-    this.persistenceService.set("groups", JSON.stringify(this.dataService.groups), {type: StorageType.LOCAL});
+    this.persistenceService.set("groups", this.dataService.groups, {type: StorageType.LOCAL});
   }
 
   loadGroups(){
-    this.dataService.groups = JSON.parse(this.persistenceService.get('groups', StorageType.LOCAL));
+    this.dataService.groups = this.persistenceService.get('groups', StorageType.LOCAL);
+    this.removeEmptyGroup();
   }
   
   exportGroups(){
@@ -52,6 +60,12 @@ export class GroupsComponent implements OnInit {
       self.dataService.groups = JSON.parse(loader.result);
     }
     loader.readAsText(file);
+    this.removeEmptyGroup();
+  }
+
+  removeEmptyGroup(){
+    delete this.dataService.groups[""];
+    delete this.dataService.groups[" "];
   }
 
   removeGroup(groupName){

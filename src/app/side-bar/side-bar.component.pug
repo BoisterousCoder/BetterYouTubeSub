@@ -1,8 +1,7 @@
 //- This Source Code Form is subject to the terms of the Mozilla Public
 //- License, v. 2.0. If a copy of the MPL was not distributed with this
 //- file, You can obtain one at http://mozilla.org/MPL/2.0/.
-button('(click)'='allOn()') All On
-button('(click)'='allOff()') All Off
-ol
-    li('*ngFor'='let creator of dataService.creators; let i = index')
-        span('[class]'='getBackgroundColor(creator)' '(click)' = 'toggleActive(i)') {{creator.title}}
+button('mat-button' '(click)'='creators.selectAll(); allOn()') Select All
+button('mat-button' '(click)'='creators.deselectAll(); allOff()') Deselect All
+mat-selection-list('#creators' '(selectionChange)'='setActive($event)')
+    mat-list-option('*ngFor'='let creator of dataService.creators' '(onload)' = 'creators.selectAll(); allOn()') {{creator.title}}

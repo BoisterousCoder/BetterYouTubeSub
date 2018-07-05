@@ -1,18 +1,25 @@
 //- This Source Code Form is subject to the terms of the Mozilla Public
 //- License, v. 2.0. If a copy of the MPL was not distributed with this
 //- file, You can obtain one at http://mozilla.org/MPL/2.0/.
-div
-	button('(click)'= 'isManageMode = !isManageMode; dataService.isInAddMode = false') {{isManageMode?"Leave Manage Groups Mode":"Enter Manage Groups Mode"}}
-	button('(click)'= 'loadGroups()') Load Groups
-	button('*ngIf'="isManageMode", '(click)'= 'saveGroups()') Save Groups
-	button('*ngIf'="isManageMode", '(click)'= 'exportGroups()') Export Groups
-	label('*ngIf'="isManageMode") Import Groups:
-	input(type="file", '*ngIf'="isManageMode", '(change)'= 'importGroups($event.target.files[0])')
-form('*ngIf'="isManageMode" '(submit)'= 'createGroup($event)') Create Group:
-	input(name='groupName')
-	input(type='submit')
-span('*ngFor'='let groupName of groupNames') {{groupName}}
-	button.b1('(click)'='b1Click(groupName)') {{isManageMode?"manage":"on"}}
-	button.b2('(click)'='b2Click(groupName)') {{isManageMode?"remove":"off"}}
-br
-br
+mat-toolbar.scrollable("color"="primary" '*ngIf'='groupNames.length > 0')
+	mat-card('*ngFor'='let groupName of groupNames')  
+		mat-card-content 
+			span {{groupName}}
+			button('mat-button' '*ngIf'='!isManageMode||(groupName!=dataService.groupToAddTo)' '(click)'='b1Click(groupName)') {{isManageMode?"manage":"on"}}
+			button('mat-raised-button' 'color'="accent" '*ngIf'='isManageMode&&(groupName==dataService.groupToAddTo)' '(click)'='b1Click(groupName)') manage
+			button('mat-button' '(click)'='b2Click(groupName)') {{isManageMode?"remove":"off"}}
+mat-accordion
+	mat-expansion-panel('(opened)'="isManageMode = true" '(closed)'="isManageMode = false")
+		mat-expansion-panel-header
+			mat-panel-title Mange Groups
+		form('*ngIf'="isManageMode" '(submit)'= 'createGroup($event)') Create Group:
+			input(name='groupName')
+			input(type='submit')
+			button('mat-button' '(click)'= 'loadGroups()') Load Groups
+			button('mat-button' '*ngIf'="isManageMode", '(click)'= 'saveGroups()') Save Groups
+			button('mat-button' '*ngIf'="isManageMode", '(click)'= 'exportGroups()') Export Groups
+			label('*ngIf'="isManageMode") Import Groups:
+			input(type="file", '*ngIf'="isManageMode", '(change)'= 'importGroups($event.target.files[0])')
+	ng-content
+mat-selection-list('*ngIf'='dataService.isInAddMode' '#creators' '(selectionChange)'='setActive($event)')
+	mat-list-option('*ngFor'='let creator of sortByTitle(dataService.allCreators)' '(onload)' = 'creators.selectAll(); allOn()') {{creator.title}}
