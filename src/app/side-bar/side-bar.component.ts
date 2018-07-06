@@ -56,7 +56,7 @@ export class SideBarComponent {
     }
   }
   setActive(e){
-    let optionToChange:string = e.option.getLabel();
+    let optionToChange:string = e.option.value;
     let isSetTo:boolean = e.option.selected;
     let i = 0;
     for(let creator of this.dataService.creators){
