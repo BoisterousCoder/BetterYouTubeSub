@@ -5,6 +5,6 @@ button('mat-button' '(click)'='creators.selectAll(); allOn()') Select All
 button('mat-button' '(click)'='creators.deselectAll(); allOff()') Deselect All
 mat-selection-list('#creators' '(selectionChange)'='setActive($event)' '[compareWith]' = 'log')
     mat-list-option('*ngFor'='let creator of dataService.creators' '[value]'='creator.title' '[selected]'='true')
-        span(matLine style="margin-left:45px;line-height:20px;position: relative;top: 20px;") {{creator.title}}
-        span(matLine style="margin-left:45px;line-height:20px;position: relative;top: 20px;") {{creator.stats.subscriberCount}}
+        span(matLine style="margin-left:45px;line-height:25px;position: relative;top: 20px;") {{creator.title}}
+        span(matLine style="margin-left:45px;line-height:15px;position: relative;top: 20px;") {{creator.stats.subscriberCount}}
         img('matListAvatar' style='position: relative;top: -20px;' '[src]'='creator.thumbnails.medium.url')

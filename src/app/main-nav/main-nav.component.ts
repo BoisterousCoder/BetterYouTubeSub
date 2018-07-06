@@ -14,6 +14,7 @@ export interface DialogData {
   styleUrls: ['./main-nav.component.css']
 })
 export class MainNavComponent{
+  isDrawerOpen = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

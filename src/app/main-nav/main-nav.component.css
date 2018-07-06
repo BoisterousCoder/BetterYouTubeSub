@@ -1,8 +1,8 @@
 .sidenav-container {
   height: 100%;
 }
-.sidenav {
-  width: 20em;
+.mat-sidenav {
+  width: 15em;
 }
 
 .mat-toolbar.mat-primary {

@@ -25,6 +25,14 @@ function getChannelIDByUsername(username, callback){
 	})
 }
 function getUploadsPlaylistID(channelId, callback){
+	function getIndexToSet(channelData){
+		let i = 0;
+		for(let sub of subs){
+			if(sub.title == channelData.snippet.title) return i;
+			else i++;
+		}
+		return subs.length;
+	}
 	$.ajax({
 		url:"https://www.googleapis.com/youtube/v3/channels",
 		dataType: 'jsonp',
@@ -39,7 +47,7 @@ function getUploadsPlaylistID(channelId, callback){
 				if(i ==0){
 					let sub = channelData.snippet;
 					sub.stats = channelData.statistics;
-					subs.push(sub);
+					subs[getIndexToSet(channelData)] = sub;
 					callback(channelData.contentDetails.relatedPlaylists.uploads)
 				} else {
 					console.error("HOW IS THIS POSSIBLE?!?!");
