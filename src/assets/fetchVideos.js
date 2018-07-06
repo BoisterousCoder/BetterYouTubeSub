@@ -31,13 +31,15 @@ function getUploadsPlaylistID(channelId, callback){
 		crossDomain: true,
 		data:{
 			'id': channelId,
-			'part': 'snippet, contentDetails',
+			'part': 'snippet, contentDetails, statistics',
 			'key': API_KEY
 		},
 		success: function(data){
 			data.items.map((channelData, i) => {
 				if(i ==0){
-					subs.push(channelData.snippet);
+					let sub = channelData.snippet;
+					sub.stats = channelData.statistics;
+					subs.push(sub);
 					callback(channelData.contentDetails.relatedPlaylists.uploads)
 				} else {
 					console.error("HOW IS THIS POSSIBLE?!?!");
