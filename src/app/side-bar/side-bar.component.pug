@@ -3,5 +3,7 @@
 //- file, You can obtain one at http://mozilla.org/MPL/2.0/.
 button('mat-button' '(click)'='creators.selectAll(); allOn()') Select All
 button('mat-button' '(click)'='creators.deselectAll(); allOff()') Deselect All
-mat-selection-list('#creators' '(selectionChange)'='setActive($event)')
-    mat-list-option('*ngFor'='let creator of dataService.creators' '(onload)' = 'creators.selectAll(); allOn()') {{creator.title}}
+mat-selection-list('#creators' '(selectionChange)'='setActive($event)' '[compareWith]' = 'log')
+    mat-list-option('*ngFor'='let creator of dataService.creators' '[value]'='creator.title' '[selected]'='true')
+        span(matLine style="margin-left:45px;line-height:20px;position: relative;top: 10px;") {{creator.title}}
+        img('matListAvatar' style='position: relative;top: -10px;' '[src]'='creator.thumbnails.medium.url')

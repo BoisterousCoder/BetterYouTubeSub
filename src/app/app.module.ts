@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { PersistenceModule } from 'angular-persistence';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MainNavComponent, ChannelIdDialog } from './main-nav/main-nav.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { GroupsComponent } from './groups/groups.component';
@@ -14,8 +14,7 @@ import { MatCardModule,MatDialogModule, MatNativeDateModule, MatDatepickerModule
     MainNavComponent,
     SideBarComponent,
     GroupsComponent,
-    TopBarComponent,
-    ChannelIdDialog
+    TopBarComponent
   ],
   imports: [
     MatCardModule,
@@ -37,7 +36,6 @@ import { MatCardModule,MatDialogModule, MatNativeDateModule, MatDatepickerModule
     MatListModule
   ],
   providers: [],
-  bootstrap: [MainNavComponent,
-    ChannelIdDialog]
+  bootstrap: [MainNavComponent]
 })
 export class AppModule { }

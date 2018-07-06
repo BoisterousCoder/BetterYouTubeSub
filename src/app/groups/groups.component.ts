@@ -21,6 +21,24 @@ export class GroupsComponent {
     return false;
   }
 
+  addCreatorToGroup(e){
+    let creatorTitle:string = e.option.getLabel();
+    let isAlreadyInGroup:boolean = !e.option.selected;
+    if(isAlreadyInGroup){
+      let i = this.dataService.groups[this.dataService.groupToAddTo].indexOf(creatorTitle);
+      this.dataService.groups[this.dataService.groupToAddTo].splice(i, 1);
+    }else{
+      this.dataService.groups[this.dataService.groupToAddTo].push(creatorTitle);
+    }
+    console.log(this.dataService.groups[this.dataService.groupToAddTo])
+  }
+  isCreatorInGroup(creatorTitle){
+    for(let creator of this.dataService.groups[this.dataService.groupToAddTo]){
+      if(creator.title == creatorTitle) return true;
+    }
+    return false;
+  }
+
   sortByTitle(array){
     return array.sort((a, b) => {
       var x = a.title.toLowerCase();

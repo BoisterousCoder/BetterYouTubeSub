@@ -23,9 +23,10 @@ export class DataService{
   constructor() {
     let now = new Date();
     this.isInAddMode = false;
-    this.today = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate()
+    this.today = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate();
     now.setDate(now.getDate()-3);
-    this.startDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate()
+    this.startDate = now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
+    this.buildListings();
   }
   buildListings(){
     this.listings = [];

@@ -22,5 +22,5 @@ mat-accordion
 		label Import Groups:
 		input(type="file", '(change)'= 'importGroups($event.target.files[0])')
 	ng-content('*ngIf'='!dataService.isInAddMode')
-mat-selection-list('*ngIf'='dataService.isInAddMode' '#creators' '(selectionChange)'='setActive($event)')
-	mat-list-option('*ngFor'='let creator of sortByTitle(dataService.allCreators)' '(onload)' = 'creators.selectAll(); allOn()') {{creator.title}}
+mat-selection-list('*ngIf'='dataService.isInAddMode' '#creators' '(selectionChange)'='addCreatorToGroup($event)')
+	mat-list-option('*ngFor'='let creator of sortByTitle(dataService.allCreators)' '[selected]'='isCreatorInGroup(creator.title)') {{creator.title}}

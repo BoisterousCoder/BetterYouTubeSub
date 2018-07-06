@@ -65,4 +65,9 @@ export class SideBarComponent {
     }
     this.dataService.creators[i].isActive = isSetTo;
   }
+  log(o1, o2){
+    console.log(o1);
+    console.log(o2);
+    return true;
+  }
 }

@@ -1,5 +1,4 @@
-import { Component, Inject,  AfterViewInit} from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Component} from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs';
@@ -14,18 +13,14 @@ export interface DialogData {
   templateUrl: './main-nav.component.pug',
   styleUrls: ['./main-nav.component.css']
 })
-export class MainNavComponent implements AfterViewInit{
+export class MainNavComponent{
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
     
-  constructor(private breakpointObserver: BreakpointObserver, private dataService: DataService, public dialog: MatDialog) {}
-
-  ngAfterViewInit(){
-    this.requestChannelID();
-  }
+  constructor(private breakpointObserver: BreakpointObserver, private dataService: DataService) {}
   isListingActive(listing){
     let creator;
     for(creator of this.dataService.creators){
@@ -33,37 +28,4 @@ export class MainNavComponent implements AfterViewInit{
     }
     return creator.isActive;
   }
-
-  ngOnInit(){
-    
-  }
-
-  requestChannelID(){
-    const dialogRef = this.dialog.open(ChannelIdDialog, {
-      width: '250px',
-      data: {channelId: this.dataService.channelId}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.dataService.channelId = result;
-      this.dataService.buildListings();
-    });
-  }
-}
-
-@Component({
-  selector: 'channel-id-dialog',
-  templateUrl: 'channel-id-dialog.pug',
-})
-export class ChannelIdDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<ChannelIdDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }
