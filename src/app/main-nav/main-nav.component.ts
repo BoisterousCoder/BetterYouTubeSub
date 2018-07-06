@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs';
@@ -8,13 +8,21 @@ export interface DialogData {
   channelId: string;
 }
 
+declare var device;
+
 @Component({
   selector: 'main-nav',
   templateUrl: './main-nav.component.pug',
   styleUrls: ['./main-nav.component.css']
 })
-export class MainNavComponent{
+export class MainNavComponent implements OnInit{
   isDrawerOpen = false;
+
+  ngOnInit() { 
+    document.addEventListener("deviceready", function() { 
+      alert(device.platform); 
+    }, false); 
+  }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
