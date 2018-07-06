@@ -25,3 +25,4 @@ mat-sidenav-container.sidenav-container
             '[href]'='"https://www.youtube.com/watch?v="+listing.video.id' 
             target="_blank") 
             | {{listing.video.publishedAt.split("T")[0]}} --- {{listing.video.title}} --- {{listing.creator.title}}
+          mat-divider('*ngIf'='isListingActive(listing)')

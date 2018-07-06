@@ -7,7 +7,7 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { GroupsComponent } from './groups/groups.component';
-import { MatCardModule,MatDialogModule, MatNativeDateModule, MatDatepickerModule, MatGridListModule, MatInputModule, MatFormFieldModule, MatExpansionModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatCardModule,MatDividerModule, MatNativeDateModule, MatDatepickerModule, MatGridListModule, MatInputModule, MatFormFieldModule, MatExpansionModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -23,9 +23,9 @@ import { MatCardModule,MatDialogModule, MatNativeDateModule, MatDatepickerModule
     MatDatepickerModule,
     MatInputModule,
     MatExpansionModule,
-    MatDialogModule,
     MatNativeDateModule,
     BrowserModule,
+    MatDividerModule,
     PersistenceModule,
     LayoutModule,
     BrowserAnimationsModule,
