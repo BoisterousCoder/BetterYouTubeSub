@@ -4,6 +4,7 @@ import { PersistenceModule } from 'angular-persistence';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MainNavComponent } from './main-nav/main-nav.component';
+import { HttpClientModule } from '@angular/common/http';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { GroupsComponent } from './groups/groups.component';
@@ -17,6 +18,7 @@ import { MatCardModule,MatDividerModule, MatNativeDateModule, MatDatepickerModul
     TopBarComponent
   ],
   imports: [
+    HttpClientModule,
     MatCardModule,
     MatGridListModule,
     MatFormFieldModule,

@@ -2,8 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 import { Injectable } from '@angular/core';
-declare var getAllVideosBetween: any;
-declare var subs: any;
+import { FetcherService } from './fetcher.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,7 @@ export class DataService{
   listings = [];
   creators = [];
   get allCreators(){
-    return subs;
+    return this.fetcher.subs;
   }
   groups = {};
   isInAddMode;
@@ -20,7 +19,7 @@ export class DataService{
   groupToAddTo;
   startDate;
   channelId = 'UCRWa5qX5vw23r_R2j1yixbA';
-  constructor() {
+  constructor(private fetcher:FetcherService) {
     let now = new Date();
     this.isInAddMode = false;
     this.today = now.getFullYear() + "-" + (now.getMonth()+1) + "-" +now.getDate();
@@ -32,7 +31,9 @@ export class DataService{
     this.listings = [];
     this.creators = [];
     let self = this;
-    getAllVideosBetween(this.startDate, this.today, this.channelId, (video, creator) => {
+    this.fetcher.getAllVideosBetween(this.startDate, this.today, this.channelId).subscribe((data) => {
+      let video = data[0];
+      let creator = data[1];
       creator.isActive = true;
       self.listings.push({video, creator})
       this.listings.sort((a, b) => {
@@ -49,8 +50,8 @@ export class DataService{
   }
   sortCreators(){
     this.creators.sort((a, b) => {
-      var x = a.title.toLowerCase();
-      var y = b.title.toLowerCase();
+      let x = a.title.toLowerCase();
+      let y = b.title.toLowerCase();
       if (x < y) {return -1;}
       if (x > y) {return 1;}
       return 0;
